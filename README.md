@@ -59,3 +59,7 @@
 <p>
   <img align="center" src="https://github-readme-streak-stats.herokuapp.com/?user=zara-me&" alt="zara-me" />
 </p>
+
+<p align="center">
+  bot in Telegram - <a href="https://t.me/vt_itmo_bot" target="_blank" rel="noreferrer">https://t.me/vt_itmo_bot</a>
+</p>
