@@ -1,0 +1,18 @@
+At least 6 entities. At least one M-M. All should obey 3 NF. There should be at least one with not less than 4 attributes. Draw datalogical model.
+For any of the entities with >= 4 attributes, proof that it exists in 3 NF. 
+Create a view for your model. Write to which kind of view it belongs to.
+Write a scenario and an SQL query on the M-M using INNER JOIN
+Draw an effective plan for the query above. Explain why you choose it. 
+Create an algorithm for the query using JOIN, (you can add indexes), and give an algorithm for the JOIN.
+
+-----------------------------------------------------
+
+1) нарисовать даталогическую модель, 6 сущностей, написать все связи many to many
+2) написать представление и зачем оно нужно 
+3) написать запрос
+4) написать алгоритм выполнения запроса
+
+Представлегие и его тип
+
+---------------------------------------------------------
+
