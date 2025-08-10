@@ -1,0 +1,13 @@
+ *Useful links for OPD: ( Copied from: https://github.com/q-artem/ITMO-Labs/blob/master/OPD/for_easy_defence )!!!
+
+-мой простенький форматировщик ассемблера, на питоне, есть собранный в .exe (https://github.com/q-artem/asmFormatter)
+- большой подробный гайд по бэвм (https://github.com/Zerumi/OPD-guide-RU-/tree/master)
+- трассировка в консоли (https://github.com/tune-it/bcomp/blob/v2-ng-master/doc/cli.html)
+- список вопросов (https://se.ifmo.ru/~ninomt/questions.html) на экз
+- про ассемблер (Lab5/for_easy_defence/про ассемблер.txt)
+- конвертер код -> asm (https://github.com/ChupIks777/public-projects/tree/main)
+- микролекция 2 функции (файл в этой директории)
+- вырианты рубежки 2 (https://github.com/serezk4/ITMO.labs/blob/master/OPD/rub.md)
+- рубеж 2 (https://205826.github.io/MicroProgramTracingBasicComputer/
+           https://github.com/Zerumi/OPD-guide-RU-/blob/master/microcode_guide.md
+           https://docs.google.com/spreadsheets/d/1o48u14qvOxD4vGj8GKwhTaU_V9k2HqpNV8Ys4oXJqbM/edit?gid=515233452#gid=515233452)
