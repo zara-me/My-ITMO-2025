@@ -1,4 +1,5 @@
-# My-ITMO-2025
+![logo](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQuOeFe80OCIMvGLkCxBn8O-cbj6D70aconVw&s)
+
 <h1 align="center">Hi 🌱, I'm Zara</h1>
 <h3 align="center">Engineering student & tech enthusiast at ITMO University</h3>
 
