@@ -16,7 +16,7 @@
 
 - 📫 How to reach me **zzz.toohy@gmail.com**
 
-[ #itmo ](https://github.com/search?q=%23python) [ #itmo-lab ](https://github.com/search?q=%23opensource) [ #itmo-University ](https://github.com/search?q=%23python)
+[ #itmo ](https://github.com/search?q=%23itmo) [ #itmo-lab ](https://github.com/search?q=%23itmo-lab) [ #itmo-University ](https://github.com/search?q=%23itmo-University)
 
 
 <h3 align="left">Connect with me:</h3>
