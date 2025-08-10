@@ -4,7 +4,7 @@
 </p>
 
 <h1 align="center">Hi 🌱, I'm Zara</h1>
-<h3 align="center">Engineering student & tech enthusiast at ITMO University</h3>
+<h3 align="center">Engineering student & tech enthusiast at ITMO University (ФПИиКТ) </h3>
 
 <p align="left"> 
   <img src="https://komarev.com/ghpvc/?username=zara-me&label=Profile%20views&color=0e75b6&style=flat" alt="zara-me" /> 
