@@ -4,6 +4,9 @@
 
 <p align="left"> <img src="https://komarev.com/ghpvc/?username=zara-me&label=Profile%20views&color=0e75b6&style=flat" alt="zara-me" /> </p>
 
+
+<img align="right" alt="zara" width = "350" src="https://i.pinimg.com/originals/31/9f/e6/319fe684418db3ae56035aa4a08bc40b.gif">
+
 - 👨‍💻 All of my projects are available at [https://github.com/zara-me](https://github.com/zara-me)
 
 - 📫 How to reach me **zzz.toohy@gmail.com**
