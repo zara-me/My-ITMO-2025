@@ -1,0 +1,36 @@
+<root>
+  <schedule>
+    <day>
+      <- name>"Wednesday"</- name>
+      <subject>
+        <- name>"Informatics"</- name>
+        <type>"Lecture"</type>
+        <time>"08:20-09:50"</time>
+        <instructor>"Balakshin Pavel Valeryevich"</instructor>
+        <room>"1216"</room>
+        <address>"Lomonosova Street, Building 9"</address>
+        <- name>"Fundamentals of Professional Activity"</- name>
+        <type>"Lecture"</type>
+        <time>"10:00-11:30"</time>
+        <instructor>"Klimenkov Sergey Viktorovich"</instructor>
+        <room>"1216"</room>
+        <address>"Lomonosova Street, Building 9"</address>
+        </subject>
+      <- name>"Saturday"</- name>
+      <subject>
+        <- name>"Linear Algebra"</- name>
+        <type>"Lab Work"</type>
+        <time>"08:20 - 09:50"</time>
+        <instructor>"Isaeva Tatyana Timofeevna"</instructor>
+        <room>"2113"</room>
+        <address>"Kronversky Prospect 49"</address>
+        <- name>"Fundamentals of Professional Activity"</- name>
+        <type>"Lab Work"</type>
+        <time>"09:50 - 11:30"</time>
+        <instructor>"Oblyashevsky Sevastian Alexandrovich"</instructor>
+        <room>"2308"</room>
+        <address>"Kronversky Prospect 49"</address>
+        </subject>
+      </day>
+    </schedule>
+</root>
