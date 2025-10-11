@@ -1,0 +1,238 @@
+Гайд по 1 лабораторной работе для самых тупых маленьких
+Important
+
+Кто не поставил звездочку репозиторию тот БЭВМ
+
+Note
+
+Делать все будем в Intellij IDEA Ultimate, остальным соболезную.
+
+Создание проекта
+Создаем Java проект с Gradle на билд системе (Groovy DSL потому что дитенаху).
+
+creating project
+
+Создаем в корне проекта папку libs/ и кладем в нее нашу библиотеку скачаную с se.ifmo.ru. Открываем build.gradle и добавляем в него следующее:
+
+dependencies {
+    implementation files('./libs/<НАЗВАНИЕ БИБЛИОТЕКИ>.jar') // Указываем путь к библиотеке
+}
+// Этот блок нужен для сборки fat jar файла
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'ru.rmntim.web.Main'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    archiveFileName = 'labwork1.jar'
+}
+Теперь наш прекрасный проект собирается одной командой:
+
+./gradlew jar
+Собранный jar-файл лежит в build/libs/labwork1.jar. Я надеюсь запускать jar файлы вы умеете (если нет пишите ПСЖ вас не спасти).
+
+Локальный запуск (через Docker)
+Итак самое веселое. Так как (если вы не долбоеб) вы хотите тестить полученное приложение на локальной машине, вы должны сначала создать докер-контейнер с помощью docker compose. Для этого нам нужны 2 вещи:
+
+Dockerfile для нашего приложения
+docker-compose.yml для связки httpd с нашим приложением
+Dockerfile
+# Собираем наш сервер
+FROM gradle:8.10-jdk17 AS build
+COPY --chown=gradle:gradle .. /home/gradle/src
+WORKDIR /home/gradle/src
+RUN gradle jar --no-daemon
+
+FROM eclipse-temurin:17-jre
+# Этот порт значения не имеет, выбираем любой
+EXPOSE 1337
+RUN mkdir /app
+WORKDIR /app
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/app.jar
+ENTRYPOINT ["java", "-DFCGI_PORT=1337", "-jar", "app.jar"]
+docker-compose.yml
+services:
+  # Наше приложение
+  fcgi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    networks:
+      backend:
+
+  # Сам веб-сервер
+  httpd:
+    image: "httpd:2.4.62"
+    ports:
+      - "8080:80"
+    volumes:
+      - "./httpd.conf:/usr/local/apache2/conf/httpd.conf"
+      - "./static:/var/www"
+    networks:
+      backend:
+networks:
+  backend:
+Из содержания docker-compose.yml мы видим что нужно создать 2 файла (ну 1 файл и директорию, не доебывайтесь до слов):
+
+httpd.conf - настройки веб-сервера
+static/ - статические файлы (HTML + CSS + JS)
+Вся соль в том, что httpd.conf нам нужен особенный, тот что лежит на se.ifmo.ru подходит только для гелиоса. В этой папке лежит уже готовый так что вам даже ничего делать не надо.
+
+Написание самого сервера
+Это я оставлю на вас, так как тут сильная зависимость от лабы. Могу разве что дать ссылку на документацию этой библиотеки: https://fastcgi-archives.github.io/fcgi2/doc/fcgi-java.htm
+
+Запуск
+Warning
+
+Помним, что в httpd.conf для нашего сервера указан адрес /calculate. Порт проброшен 8080.
+
+По сути все делается 1 командой:
+
+docker compose up -d
+Если хотите обновить приложение в контейнере:
+
+docker compose up --build -d
+После выполнения этой команды (если вы все правильно сделали) у вас поднимаются 2 контейнера и становиться доступен порт 8080, через который вы как раз сможете взаимодействовать с приложением.
+
+
+*اونی که در سایته فقط برای هلیوس است 
+
+httpd.conf (برای لوکال)
+
+ServerRoot "/usr/local/apache2"
+
+Listen 80
+
+LoadModule mpm_event_module modules/mod_mpm_event.so
+LoadModule authn_file_module modules/mod_authn_file.so
+LoadModule authn_core_module modules/mod_authn_core.so
+LoadModule authz_host_module modules/mod_authz_host.so
+LoadModule authz_groupfile_module modules/mod_authz_groupfile.so
+LoadModule authz_user_module modules/mod_authz_user.so
+LoadModule authz_core_module modules/mod_authz_core.so
+LoadModule access_compat_module modules/mod_access_compat.so
+LoadModule auth_basic_module modules/mod_auth_basic.so
+LoadModule reqtimeout_module modules/mod_reqtimeout.so
+LoadModule filter_module modules/mod_filter.so
+LoadModule mime_module modules/mod_mime.so
+LoadModule log_config_module modules/mod_log_config.so
+LoadModule env_module modules/mod_env.so
+LoadModule headers_module modules/mod_headers.so
+LoadModule setenvif_module modules/mod_setenvif.so
+LoadModule version_module modules/mod_version.so
+LoadModule proxy_module modules/mod_proxy.so
+LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so
+LoadModule unixd_module modules/mod_unixd.so
+LoadModule status_module modules/mod_status.so
+LoadModule autoindex_module modules/mod_autoindex.so
+LoadModule dir_module modules/mod_dir.so
+LoadModule alias_module modules/mod_alias.so
+
+<IfModule unixd_module>
+    User www-data
+    Group www-data
+</IfModule>
+
+<Directory />
+    AllowOverride none
+    Require all denied
+</Directory>
+
+DocumentRoot "/var/www"
+
+<Directory "/var/www">
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+</Directory>
+
+<IfModule dir_module>
+    DirectoryIndex index.html
+</IfModule>
+
+<Files ".ht*">
+    Require all denied
+</Files>
+
+ErrorLog /proc/self/fd/2
+LogLevel warn
+
+<IfModule log_config_module>
+    LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\"" combined
+    LogFormat "%h %l %u %t \"%r\" %>s %b" common
+    <IfModule logio_module>
+        LogFormat "%h %l %u %t \"%r\" %>s %b \"%{Referer}i\" \"%{User-Agent}i\" %I %O" combinedio
+    </IfModule>
+    CustomLog /proc/self/fd/1 common
+</IfModule>
+
+<IfModule alias_module>
+    ScriptAlias /cgi-bin/ "/usr/local/apache2/cgi-bin/"
+</IfModule>
+
+<Directory "/usr/local/apache2/cgi-bin">
+    AllowOverride None
+    Options None
+    Require all granted
+</Directory>
+
+<IfModule headers_module>
+    RequestHeader unset Proxy early
+</IfModule>
+
+<IfModule mime_module>
+    TypesConfig conf/mime.types
+    AddType application/x-compress .Z
+    AddType application/x-gzip .gz .tgz
+</IfModule>
+
+<IfModule proxy_html_module>
+    Include conf/extra/proxy-html.conf
+</IfModule>
+
+<IfModule ssl_module>
+    SSLRandomSeed startup builtin
+    SSLRandomSeed connect builtin
+</IfModule>
+
+ProxyPass "/calculate" "fcgi://fcgi:1337"
+
+
+
+
+
+
+
+
+نکته اگر چیزی را تغییر دادی !!
+
+1) متوقف کردن کانتینرها / حذف mountها (اگر بالا هستند)
+
+در پوشهٔ پروژه:
+
+# Git Bash / WSL
+docker compose down
+
+
+یا در PowerShell / CMD:
+
+docker compose down
+
+
+(این اطمینان می‌دهد که کانتینرها دایرکتوری را قفل نکرده‌اند.)
+
+2) متوقف‌ کردن Gradle daemon و فرآیندهای جاوا محلی
+
+Gradle daemon را بزن بیرون:
+
+./gradlew --stop 
+
+
+اجرای clean و jar دوباره (بدون daemon)
+
+پس از حذف موفق build/:
+
+./gradlew clean jar --no-daemon
