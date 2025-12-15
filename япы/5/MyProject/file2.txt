@@ -1,0 +1,4 @@
+﻿This is a sample test file to count letters and words.
+hi hi hi hi hi you can do it 
+it is ok
+it works?
