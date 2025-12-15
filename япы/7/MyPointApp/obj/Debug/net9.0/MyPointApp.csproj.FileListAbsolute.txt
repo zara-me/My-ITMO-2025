@@ -1,0 +1,14 @@
+C:\Users\User\OneDrive\Desktop\lab7\MyPointApp\bin\Debug\net9.0\MyPointApp.exe
+C:\Users\User\OneDrive\Desktop\lab7\MyPointApp\bin\Debug\net9.0\MyPointApp.deps.json
+C:\Users\User\OneDrive\Desktop\lab7\MyPointApp\bin\Debug\net9.0\MyPointApp.runtimeconfig.json
+C:\Users\User\OneDrive\Desktop\lab7\MyPointApp\bin\Debug\net9.0\MyPointApp.dll
+C:\Users\User\OneDrive\Desktop\lab7\MyPointApp\bin\Debug\net9.0\MyPointApp.pdb
+C:\Users\User\OneDrive\Desktop\lab7\MyPointApp\obj\Debug\net9.0\MyPointApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\User\OneDrive\Desktop\lab7\MyPointApp\obj\Debug\net9.0\MyPointApp.AssemblyInfoInputs.cache
+C:\Users\User\OneDrive\Desktop\lab7\MyPointApp\obj\Debug\net9.0\MyPointApp.AssemblyInfo.cs
+C:\Users\User\OneDrive\Desktop\lab7\MyPointApp\obj\Debug\net9.0\MyPointApp.csproj.CoreCompileInputs.cache
+C:\Users\User\OneDrive\Desktop\lab7\MyPointApp\obj\Debug\net9.0\MyPointApp.dll
+C:\Users\User\OneDrive\Desktop\lab7\MyPointApp\obj\Debug\net9.0\refint\MyPointApp.dll
+C:\Users\User\OneDrive\Desktop\lab7\MyPointApp\obj\Debug\net9.0\MyPointApp.pdb
+C:\Users\User\OneDrive\Desktop\lab7\MyPointApp\obj\Debug\net9.0\MyPointApp.genruntimeconfig.cache
+C:\Users\User\OneDrive\Desktop\lab7\MyPointApp\obj\Debug\net9.0\ref\MyPointApp.dll
