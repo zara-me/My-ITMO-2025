@@ -1,0 +1,110 @@
+package org.example;
+
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+import java.util.ArrayList;
+
+public class NewtonFractal {
+
+    public static Complex f(Complex z, Complex c) {
+        return z.pow(5).add(c);
+    }
+
+    public static Complex fDiff(Complex z) {
+        return z.pow(4).multiply(5);
+    }
+
+    public static Complex newtonIteration(Complex z, Complex c, double R, int maxIter) {
+        for (int i = 0; i < maxIter; i++) {
+            Complex dz = f(z, c).divide(fDiff(z));
+            if (dz.abs() < R) return z;
+            z = z.subtract(dz);
+        }
+        return null;
+    }
+
+    public static int getRootIndex(ArrayList<Complex> roots, Complex rez, double R) {
+        for (int i = 0; i < roots.size(); i++) {
+            if (rez.subtract(roots.get(i)).abs() < R) return i;
+        }
+        roots.add(rez);
+        return roots.size() - 1;
+    }
+
+    public static void main(String[] args) throws Exception {
+
+        int nIter = 2000;
+        int nPointsX = 250;
+        int nPointsY = 250;
+        double xmin = -1, xmax = 1, ymin = -1, ymax = 1;
+        double R = 1e-10;
+        Complex C = new Complex(-1, 0);
+        Color[] colors = { Color.BLUE, Color.GREEN, Color.RED, Color.YELLOW, Color.BLACK };
+
+        BufferedImage img = new BufferedImage(nPointsX, nPointsY, BufferedImage.TYPE_INT_RGB);
+        ArrayList<Complex> roots = new ArrayList<>();
+
+        for (int ix = 0; ix < nPointsX; ix++) {
+            double x = xmin + ix * (xmax - xmin) / (nPointsX - 1);
+            for (int iy = 0; iy < nPointsY; iy++) {
+                double y = ymin + iy * (ymax - ymin) / (nPointsY - 1);
+                Complex z0 = new Complex(x, y);
+                Complex rez = newtonIteration(z0, C, R, nIter);
+                if (rez != null) {
+                    int rootIndex = getRootIndex(roots, rez, R);
+                    Color col = colors[rootIndex % colors.length];
+                    img.setRGB(ix, nPointsY - 1 - iy, col.getRGB());
+                } else {
+                    img.setRGB(ix, nPointsY - 1 - iy, Color.BLACK.getRGB());
+                }
+            }
+        }
+
+        ImageIO.write(img, "png", new File("newton_fractal.png"));
+        System.out.println("✅ Фрактал Ньютона сохранён: newton_fractal.png");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package org.example;
+
+class Complex {
+    public double re, im;
+    public Complex(double re, double im) { this.re = re; this.im = im; }
+
+    public Complex add(Complex other) { return new Complex(this.re + other.re, this.im + other.im); }
+    public Complex subtract(Complex other) { return new Complex(this.re - other.re, this.im - other.im); }
+    public Complex multiply(double d) { return new Complex(this.re * d, this.im * d); }
+    public Complex multiply(Complex other) {
+        return new Complex(this.re * other.re - this.im * other.im, this.re * other.im + this.im * other.re);
+    }
+    public Complex divide(Complex other) {
+        double denom = other.re*other.re + other.im*other.im;
+        return new Complex((this.re*other.re + this.im*other.im)/denom,
+                (this.im*other.re - this.re*other.im)/denom);
+    }
+    public Complex pow(int n) {
+        Complex result = new Complex(1, 0);
+        Complex base = new Complex(this.re, this.im);
+        for (int i = 0; i < n; i++) result = result.multiply(base);
+        return result;
+    }
+    public double abs() { return Math.hypot(re, im); }
+}
+
