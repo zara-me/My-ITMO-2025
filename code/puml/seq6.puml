@@ -1,0 +1,21 @@
+@startuml
+title Блокировка системы (нажатие *)
+skinparam sequenceMessageAlign center
+autonumber
+participant "Пользователь" as U
+participant "Клавиатура 3x4" as KB
+participant "STM32 (main)" as MCU
+participant "TM1637 (дисплей)" as TM
+participant "Светодиоды PA9 / PA15" as LED
+participant "USART2 (консоль)" as UART
+U -> KB : нажатие *
+KB --> MCU : readKey() возвращает *
+alt is_unlocked == 1
+MCU -> MCU : is_unlocked = 0
+MCU -> UART : System Locked!
+MCU -> LED : PA9 = 0 (зелёный ВЫКЛ)
+else система уже заблокирована
+MCU -> MCU : состояние не меняется
+end
+MCU -> TM : reset_input(): очистка введённых цифр
+@enduml

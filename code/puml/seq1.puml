@@ -1,0 +1,16 @@
+@startuml
+title Инициализация и системный таймер
+skinparam sequenceMessageAlign center
+autonumber
+participant "STM32 (main)" as MCU
+participant "SysTick" as ST
+participant "TM1637 (дисплей)" as TM
+participant "USART2 (консоль)" as UART
+MCU -> MCU : initGPIO / initUSART2 / initSysTick / initKeyboard
+MCU -> TM : tm1637_init: CMD1 0x40, CMD3 0x8F, очистка
+MCU -> UART : printf: System Started - Locked
+MCU -> TM : reset_input(): очистка 4 разрядов
+loop каждую 1 мс (аппаратно)
+ST -> MCU : прерывание SysTick: tickCount++
+end
+@enduml

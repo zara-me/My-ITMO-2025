@@ -1,0 +1,20 @@
+@startuml
+title Нажатие # в заблокированном состоянии: неверный код
+skinparam sequenceMessageAlign center
+autonumber
+participant "Пользователь" as U
+participant "Клавиатура 3x4" as KB
+participant "STM32 (main)" as MCU
+participant "TM1637 (дисплей)" as TM
+participant "Светодиоды PA9 / PA15" as LED
+participant "USART2 (консоль)" as UART
+U -> KB : нажатие #
+KB --> MCU : readKey() возвращает #
+alt is_unlocked == 0 и введённый код != current_pin
+MCU -> LED : PA15 = 1 (красный ВКЛ)
+MCU -> UART : Access Denied!
+MCU -> MCU : delay_ms(2000)
+MCU -> LED : PA15 = 0 (красный ВЫКЛ)
+MCU -> TM : reset_input(): очистка дисплея
+end
+@enduml

@@ -1,0 +1,26 @@
+@startuml
+title Смена кода (нажатие # в разблокированном состоянии)
+skinparam sequenceMessageAlign center
+autonumber
+participant "Пользователь" as U
+participant "Клавиатура 3x4" as KB
+participant "STM32 (main)" as MCU
+participant "TM1637 (дисплей)" as TM
+participant "Светодиоды PA9 / PA15" as LED
+participant "USART2 (консоль)" as UART
+U -> KB : нажатие #
+KB --> MCU : readKey() возвращает #
+alt is_unlocked == 1 и pin_index == 4
+MCU -> MCU : current_pin = entered_pin (новый код)
+MCU -> UART : PIN Changed successfully!
+loop 3 раза
+MCU -> LED : PA9 = 0, delay_ms(200)
+MCU -> LED : PA9 = 1, delay_ms(200)
+end
+MCU -> TM : reset_input(): очистка дисплея
+else pin_index < 4 (введено менее 4 цифр)
+MCU -> UART : Error: New PIN must be 4 digits!
+MCU -> LED : PA15 = 1, delay_ms(500), PA15 = 0
+MCU -> TM : reset_input(): очистка дисплея
+end
+@enduml

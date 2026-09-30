@@ -1,0 +1,22 @@
+@startuml
+title Опрос клавиатуры и ввод цифры
+skinparam sequenceMessageAlign center
+autonumber
+participant "Пользователь" as U
+participant "Клавиатура 3x4" as KB
+participant "STM32 (main)" as MCU
+participant "TM1637 (дисплей)" as TM
+participant "USART2 (консоль)" as UART
+loop while(1): tickCount - lastScanTime > 100 мс
+U -> KB : нажатие клавиши, напр. 1
+MCU -> KB : readKey(): строка = 0 (BSRR), пауза
+KB --> MCU : чтение GPIOB->IDR: столбец = 0
+MCU -> UART : printf: Pressed: 1
+alt цифра 0-9 и pin_index < 4
+MCU -> MCU : entered_pin[pin_index] = key; pin_index++
+MCU -> TM : tm1637_display_digit_char(3-i, код сегментов)
+else иначе (лишняя цифра)
+MCU -> MCU : ввод игнорируется
+end
+end
+@enduml
